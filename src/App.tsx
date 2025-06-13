@@ -2,7 +2,6 @@ import { Canvas } from "@react-three/fiber";
 import {
   Suspense,
   createContext,
-  useContext,
   useState,
   useEffect,
   useRef,

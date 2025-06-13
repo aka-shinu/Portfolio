@@ -37,8 +37,6 @@ const REPOSITORY_METADATA: Record<string, {
 };
 
 // Default fallback data
-const DEFAULT_FEATURES = ['Modern UI/UX', 'Responsive design', 'Performance optimized', 'Clean code'];
-const DEFAULT_IMAGE = 'https://placehold.co/600x400/6b7280/ffffff?text=Project';
 
 interface GitHubRepository {
   id: number;

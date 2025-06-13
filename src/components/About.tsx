@@ -87,7 +87,7 @@ export default function About() {
                 { title: 'User-Centric', icon: '🎯' },
                 { title: 'Innovation', icon: '💡' },
                 { title: 'Learning', icon: '📚' },
-              ].map((value, index) => (
+              ].map((value) => (
                 <motion.div
                   key={value.title}
                   variants={itemVariants}
