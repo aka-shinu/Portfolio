@@ -108,7 +108,7 @@ Want to run this portfolio on your own machine or customize it? Here's how:
 ```bash
 # First, clone this repository to your computer
 git clone [https://github.com/aka-shinu/Portfolio.git](https://github.com/aka-shinu/Portfolio.git)
-cd anmol2-0.github.io
+cd Portfolio
 
 # Install all the project dependencies
 npm install
