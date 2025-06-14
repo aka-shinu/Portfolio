@@ -160,14 +160,14 @@ function App() {
             transition={{ duration: 2}}
             className="absolute inset-0"
           >
-            {isLandingVisible && (
+            {canStartRendering && (
               <Canvas
                 camera={{ position: [0, 0, 2], fov: 75 }}
                 onCreated={() => setIsLoaded(true)}
                 dpr={[1, 1.5]}
               >
                 <Suspense fallback={null}>
-                  {canStartRendering && isLandingVisible && (
+                  {isLandingVisible && (
                     <ThreeScene
                       isVisible={true}
                       maxConnectionsPerPoint={maxConnectionsPerPoint}
