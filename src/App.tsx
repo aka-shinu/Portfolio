@@ -198,7 +198,7 @@ function App() {
             transition={{ duration: 2}}
             className="absolute inset-0"
           >
-            {canStartRendering && (
+            {canStartRendering && isLandingVisible && (
               <Canvas
                 camera={{ position: [0, 0, 2], fov: 75 }}
                 onCreated={() => setIsLoaded(true)}
