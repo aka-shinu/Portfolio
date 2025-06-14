@@ -154,33 +154,6 @@ function App() {
           className="relative h-screen w-full overflow-hidden"
         >
           {/* Three.js Canvas */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: canStartRendering ? 1 : 0 }}
-            transition={{ duration: 2}}
-            className="absolute inset-0"
-          >
-            {canStartRendering && (
-              <Canvas
-                camera={{ position: [0, 0, 2], fov: 75 }}
-                onCreated={() => setIsLoaded(true)}
-                dpr={[1, 1.5]}
-              >
-                <Suspense fallback={null}>
-                  {isLandingVisible && (
-                    <ThreeScene
-                      isVisible={true}
-                      maxConnectionsPerPoint={maxConnectionsPerPoint}
-                      count={count}
-                      beamSpeed={beamSpeed}
-                      onCreated={!isLoaded ? () => {} : () => {}}
-                    />
-                  )}
-                </Suspense>
-              </Canvas>
-            )}
-          </motion.div>
-
           <div className="relative z-10 h-full flex items-center justify-center">
             <div className="text-center space-y-8 px-4 max-w-4xl mx-auto">
               <div className="space-y-4">
@@ -219,7 +192,32 @@ function App() {
               </div>
             </div>
           </div>
-
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: canStartRendering ? 1 : 0 }}
+            transition={{ duration: 2}}
+            className="absolute inset-0"
+          >
+            {canStartRendering && (
+              <Canvas
+                camera={{ position: [0, 0, 2], fov: 75 }}
+                onCreated={() => setIsLoaded(true)}
+                dpr={[1, 1.5]}
+              >
+                <Suspense fallback={null}>
+                  {isLandingVisible && (
+                    <ThreeScene
+                      isVisible={true}
+                      maxConnectionsPerPoint={maxConnectionsPerPoint}
+                      count={count}
+                      beamSpeed={beamSpeed}
+                      onCreated={!isLoaded ? () => {} : () => {}}
+                    />
+                  )}
+                </Suspense>
+              </Canvas>
+            )}
+          </motion.div>
           {/* Navigation */}
           <nav className="absolute top-0 left-0 right-0 z-20 p-6">
             <div className="container-custom flex justify-between items-center">
