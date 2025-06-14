@@ -192,13 +192,13 @@ function App() {
               </div>
             </div>
           </div>
-          <motion.div
+          {canStartRendering && (<motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: canStartRendering ? 1 : 0 }}
             transition={{ duration: 2}}
             className="absolute inset-0"
           >
-            {canStartRendering && isLandingVisible && (
+            {isLandingVisible && (
               <Canvas
                 camera={{ position: [0, 0, 2], fov: 75 }}
                 onCreated={() => setIsLoaded(true)}
@@ -217,7 +217,7 @@ function App() {
                 </Suspense>
               </Canvas>
             )}
-          </motion.div>
+          </motion.div>)}
           {/* Navigation */}
           <nav className="absolute top-0 left-0 right-0 z-20 p-6">
             <div className="container-custom flex justify-between items-center">
