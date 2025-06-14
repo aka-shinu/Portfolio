@@ -40,7 +40,7 @@ function App() {
     const start = () => setCanStartRendering(true);
   
     if ('requestIdleCallback' in window) {
-      requestIdleCallback(() => setTimeout(start, 300));
+      requestIdleCallback(() => setTimeout(start, 500));
     } else {
       setTimeout(start, 1000);
     }
