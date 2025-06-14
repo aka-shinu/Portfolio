@@ -1,3 +1,4 @@
+
 # 🌟 Anmol's Portfolio
 
 <div align="center">
@@ -108,7 +109,7 @@
 ## 🚀 Getting Started
 
 ### **Prerequisites**
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 - Git
 
@@ -116,7 +117,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/anmol2-0/anmol2-0.github.io.git
+git clone [https://github.com/aka-shinu/Portfolio.git](https://github.com/aka-shinu/Portfolio.git)
 cd anmol2-0.github.io
 
 # Install dependencies
@@ -130,7 +131,6 @@ npm run build
 
 # Preview production build
 npm run preview
-```
 
 ### **Environment Setup**
 
@@ -138,124 +138,108 @@ Create a `.env.local` file in the root directory:
 
 ```env
 VITE_GITHUB_USERNAME=your-github-username
-VITE_GITHUB_TOKEN=your-github-token
+VITE_REPO_PERPAGE=<num>
+VITE_MAX_PROJECTS=<num>
+
 ```
 
----
+-----
 
 ## 📁 Project Structure
 
 ```
 src/
-├── components/          # React components
-│   ├── About.tsx       # About section
-│   ├── Skills.tsx      # Skills visualization
-│   ├── Projects.tsx    # Projects gallery
-│   ├── Contact.tsx     # Contact form
-│   ├── Footer.tsx      # Footer component
-│   ├── ThreeScene.tsx  # 3D background
-│   └── BlobLoader.tsx  # Loading animation
-├── config/             # Configuration files
-├── context/            # React context
-├── assets/             # Static assets
-└── App.tsx            # Main application
+├── components/           # React components
+│   ├── About.tsx         # About section
+│   ├── Skills.tsx        # Skills visualization
+│   ├── Projects.tsx      # Projects gallery
+│   ├── Contact.tsx       # Contact form
+│   ├── Footer.tsx        # Footer component
+│   ├── ThreeScene.tsx    # 3D background
+│   └── BlobLoader.tsx    # Loading animation
+├── config/               # Configuration files
+├── context/              # React context
+├── assets/               # Static assets
+└── App.tsx               # Main application
 ```
 
----
+-----
 
 ## 🎨 Design System
 
 ### **Color Palette**
-- **Primary**: Blue gradients (#3B82F6 to #06B6D4)
-- **Secondary**: Dark grays (#1F2937 to #374151)
-- **Accent**: Cyan and purple highlights
-- **Background**: Dark theme with glass morphism effects
+
+  - **Primary**: Blue gradients (\#3B82F6 to \#06B6D4)
+  - **Secondary**: Dark grays (\#1F2937 to \#374151)
+  - **Accent**: Cyan and purple highlights
+  - **Background**: Dark theme with glass morphism effects
 
 ### **Typography**
-- **Headings**: Inter Tight (variable font)
-- **Body**: Inter (clean, readable)
-- **Accents**: Instrument Serif (elegant serif)
+
+  - **Headings**: Inter Tight (variable font)
+  - **Body**: Inter (clean, readable)
+  - **Accents**: Instrument Serif (elegant serif)
 
 ### **Animations**
-- **Entrance**: Staggered fade-in animations
-- **Hover**: Smooth scale and color transitions
-- **Scroll**: Intersection-based reveals
-- **3D**: Interactive particle systems
 
----
+  - **Entrance**: Staggered fade-in animations
+  - **Hover**: Smooth scale and color transitions
+  - **Scroll**: Intersection-based reveals
+  - **3D**: Interactive particle systems
 
-## 🔧 Configuration
-
-### **GitHub Integration**
-The portfolio automatically fetches your GitHub repositories. Configure in `src/config/github.ts`:
-
-```typescript
-export const GITHUB_CONFIG = {
-  username: 'your-github-username',
-  apiBaseUrl: 'https://api.github.com',
-  reposPerPage: 12,
-  maxProjects: 6
-};
-```
-
-### **Performance Settings**
-Adaptive performance based on device capabilities:
-
-```typescript
-// High-end devices: 1500 particles, 5 connections
-// Medium devices: 600 particles, 4 connections  
-// Low-end devices: 500 particles, 2 connections
-```
-
----
+-----
 
 ## 🌟 Performance Metrics
 
-- **Lighthouse Score**: 95+ across all metrics
-- **First Contentful Paint**: < 1.5s
-- **Largest Contentful Paint**: < 2.5s
-- **Cumulative Layout Shift**: < 0.1
-- **First Input Delay**: < 100ms
+  - **Lighthouse Score**: 95+ across all metrics
+  - **First Contentful Paint**: \< 1.5s
+  - **Largest Contentful Paint**: \< 2.5s
+  - **Cumulative Layout Shift**: \< 0.1
+  - **First Input Delay**: \< 100ms
 
----
+-----
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome\! Please feel free to submit a Pull Request.
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1.  Fork the repository
+2.  Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
 
----
+-----
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://www.google.com/search?q=LICENSE) file for details.
 
----
+-----
 
 ## 📞 Contact
 
 **Anmol** - [aka-shinu@lethrach.me](mailto:aka-shinu@lethrach.me)
 
-**Project Link**: [https://github.com/anmol2-0/anmol2-0.github.io](https://github.com/anmol2-0/anmol2-0.github.io)
+**Project Link**: [https://github.com/aka-shinu/Portfolio](https://github.com/aka-shinu/Portfolio)
 
-**Live Demo**: [https://anmol2-0.github.io](https://anmol2-0.github.io)
+**Live Demo**: [https://lethrach.me](https://lethrach.me)
 
----
+-----
 
-<div align="center">
+\<div align="center"\>
 
-### ⭐ If you found this portfolio helpful, please give it a star!
+### ⭐ If you found this portfolio helpful, please give it a star\!
 
-[![GitHub stars](https://img.shields.io/github/stars/anmol2-0/anmol2-0.github.io?style=social)](https://github.com/anmol2-0/anmol2-0.github.io/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/anmol2-0/anmol2-0.github.io?style=social)](https://github.com/anmol2-0/anmol2-0.github.io/network)
+[](https://github.com/aka-shinu/Portfolio/stargazers)
+[](https://github.com/aka-shinu/Portfolio/network)
 
----
+-----
 
 *Built with ❤️ using React, Three.js, and Tailwind CSS*
 
-</div>
+\</div\>
+
+```
+I have provided the GitHub README content directly in this chat, so you can easily copy and paste it.
+```
