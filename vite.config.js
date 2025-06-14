@@ -9,6 +9,26 @@ export default defineConfig(({ mode }) => ({
     cssCodeSplit: true,
     sourcemap: mode === 'development',
     minify: mode === 'production' ? 'terser' : false,
+    terserOptions: {
+        compress: {
+          warnings: false,
+          pure_getters: true,
+          unsafe: true,
+          unsafe_comps: true,
+          conditionals: true,
+          unused: true,
+          comparisons: true,
+          sequences: true,
+          dead_code: true,
+          evaluate: true,
+          if_return: true,
+          join_vars: true,
+        },
+        mangle: true,
+        format: {
+          comments: false,
+        },
+      },
     rollupOptions: {
       output: {
         // Optimize chunk splitting for better caching
@@ -47,7 +67,6 @@ export default defineConfig(({ mode }) => ({
                 ],
                 criticalConfig: {
                   inline: true,
-                  minify: true,
                   width: 1300,
                   height: 900,
                 },
