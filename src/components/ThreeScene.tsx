@@ -4,6 +4,18 @@ import { Points, PointMaterial } from "@react-three/drei";
 import * as THREE from "three";
 import { random } from "maath";
 
+// Performance detection for low-end devices
+const isLowEndDevice = () => {
+  if (typeof window === 'undefined') return false;
+  
+  // Check for low-end device indicators
+  const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const hasLowMemory = (navigator as any).deviceMemory && (navigator as any).deviceMemory < 4;
+  const hasLowCores = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
+  
+  return isMobile && (hasLowMemory || hasLowCores);
+};
+
 // Custom shader material for animated beam effect
 const BeamLineMaterial = ({
   color = "#60a5fa",
@@ -17,14 +29,22 @@ const BeamLineMaterial = ({
 
   useFrame((_, delta) => {
     if (materialRef.current) {
+      // Ensure smooth time progression
       localTime.current += delta * speed;
+      
       if (fade < 1) {
         setFade((f) => Math.min(f + delta * 1.5, 1));
       }
 
-      materialRef.current.uniforms.uOpacity.value = fade * opacity;
-      (materialRef.current as THREE.ShaderMaterial).uniforms.uTime.value = localTime.current;
-      materialRef.current.needsUpdate = true;
+      // Update uniforms efficiently
+      const uniforms = materialRef.current.uniforms;
+      uniforms.uOpacity.value = fade * opacity;
+      uniforms.uTime.value = localTime.current;
+      
+      // Only update if necessary
+      if (uniforms.uOpacity.value !== fade * opacity || uniforms.uTime.value !== localTime.current) {
+        materialRef.current.needsUpdate = true;
+      }
     }
   });
 
@@ -85,35 +105,39 @@ export default function ThreeScene({
 }: ThreeSceneProps) {
   const ref = useRef<THREE.Points>(null);
   const pointMaterialRef = useRef<THREE.PointsMaterial>(null);
-  const { mouse} = useThree();
+  const { mouse } = useThree();
   const [hovered, setHovered] = useState(false);
 
-  const connectionDistance = 0.3;
-  const mouseInfluence = 0.2;
+  // Adaptive settings for low-end devices
+  const isLowEnd = useMemo(() => isLowEndDevice(), []);
+  const adaptiveCount = isLowEnd ? Math.min(count, 300) : count;
+  const adaptiveConnections = isLowEnd ? Math.min(maxConnectionsPerPoint, 2) : maxConnectionsPerPoint;
+  const connectionDistance = isLowEnd ? 0.4 : 0.3; // Larger distance = fewer connections
+  const mouseInfluence = isLowEnd ? 0.1 : 0.2; // Less mouse influence for smoother performance
   const [fadeInProgress, setFadeInProgress] = useState(0);
 
   // Generate initial positions with more organic distribution
   const positions = useMemo(() => {
-    const positions = new Float32Array(count * 3);
+    const positions = new Float32Array(adaptiveCount * 3);
     random.inSphere(positions, { radius: 2.5 });
 
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < adaptiveCount; i++) {
       const i3 = i * 3;
       positions[i3] += Math.sin(positions[i3] * 2) * 0.2;
       positions[i3 + 1] += Math.cos(positions[i3 + 1] * 2) * 0.2;
       positions[i3 + 2] += Math.sin(positions[i3 + 2] * 2) * 0.2;
     }
     return positions;
-  }, [count]);
+  }, [adaptiveCount]);
 
   const connections = useMemo(() => {
     const lines: number[][] = [];
     const positionsArray = Array.from(positions);
     const spatialHash = new Map<string, number[]>();
-    const maxTotalLines = count;
+    const maxTotalLines = isLowEnd ? Math.min(adaptiveCount, 200) : adaptiveCount; // Limit total lines on low-end
 
     // Create spatial hash for faster neighbor lookup
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < adaptiveCount; i++) {
       const x = positionsArray[i * 3];
       const y = positionsArray[i * 3 + 1];
       const z = positionsArray[i * 3 + 2];
@@ -127,15 +151,17 @@ export default function ThreeScene({
     }
 
     // Find connections using spatial hash
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < adaptiveCount; i++) {
       const x = positionsArray[i * 3];
       const y = positionsArray[i * 3 + 1];
       const z = positionsArray[i * 3 + 2];
       let neighbors: { j: number; dist: number }[] = [];
       
-      for (let dx = -1; dx <= 1; dx++) {
-        for (let dy = -1; dy <= 1; dy++) {
-          for (let dz = -1; dz <= 1; dz++) {
+      // Reduce search area for low-end devices
+      const searchRange = isLowEnd ? 1 : 2;
+      for (let dx = -searchRange; dx <= searchRange; dx++) {
+        for (let dy = -searchRange; dy <= searchRange; dy++) {
+          for (let dz = -searchRange; dz <= searchRange; dz++) {
             const hash = `${Math.floor(x / connectionDistance) + dx},${
               Math.floor(y / connectionDistance) + dy
             },${Math.floor(z / connectionDistance) + dz}`;
@@ -157,14 +183,14 @@ export default function ThreeScene({
       }
       
       neighbors.sort((a, b) => a.dist - b.dist);
-      for (let k = 0; k < Math.min(maxConnectionsPerPoint, neighbors.length); k++) {
+      for (let k = 0; k < Math.min(adaptiveConnections, neighbors.length); k++) {
         if (lines.length >= maxTotalLines) break;
         lines.push([i, neighbors[k].j]);
       }
       if (lines.length >= maxTotalLines) break;
     }
     return lines;
-  }, [positions, count, maxConnectionsPerPoint]);
+  }, [positions, adaptiveCount, adaptiveConnections, connectionDistance, isLowEnd]);
 
   // Optimized: Single geometry for all lines
   const lineGeometry = useMemo(() => {
@@ -186,23 +212,29 @@ export default function ThreeScene({
     return geometry;
   }, [connections, positions]);
 
+  // Throttled mouse movement for better performance
+  const mouseMoveRef = useRef({ x: 0, y: 0 });
+  
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       const x = (event.clientX / window.innerWidth) * 2 - 1;
       const y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-      if (ref.current) {
-        ref.current.rotation.x += y * 0.005;
-        ref.current.rotation.y += x * 0.005;
+      // Throttle mouse updates for low-end devices
+      if (!isLowEnd || Math.abs(mouseMoveRef.current.x - x) > 0.01 || Math.abs(mouseMoveRef.current.y - y) > 0.01) {
+        mouseMoveRef.current = { x, y };
       }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [isLowEnd]);
 
-  // Consolidated useFrame hook for better performance
+  // Optimized useFrame hook with better performance for low-end devices
+  const frameCount = useRef(0);
   useFrame((state, delta) => {
+    frameCount.current++;
+    
     // Handle fade in
     if (fadeInProgress < 1) {
       setFadeInProgress((p) => Math.min(p + delta * 1.2, 1));
@@ -210,17 +242,19 @@ export default function ThreeScene({
 
     // Handle rotation and scaling
     if (ref.current) {
-      ref.current.rotation.x -= delta / 30;
-      ref.current.rotation.y -= delta / 40;
+      const rotationSpeed = isLowEnd ? 0.5 : 1; // Slower rotation for low-end
+      ref.current.rotation.x -= (delta / 30) * rotationSpeed;
+      ref.current.rotation.y -= (delta / 40) * rotationSpeed;
 
-      const mouseX = mouse.x * mouseInfluence;
-      const mouseY = mouse.y * mouseInfluence;
+      const mouseX = mouseMoveRef.current.x * mouseInfluence;
+      const mouseY = mouseMoveRef.current.y * mouseInfluence;
 
       ref.current.rotation.x += mouseY * 0.005;
       ref.current.rotation.y += mouseX * 0.005;
 
       const time = state.clock.getElapsedTime();
-      ref.current.scale.setScalar(1 + Math.sin(time * 0.5) * 0.02);
+      const scaleIntensity = isLowEnd ? 0.01 : 0.02; // Reduced scale animation
+      ref.current.scale.setScalar(1 + Math.sin(time * 0.5) * scaleIntensity);
     }
 
     // Handle material updates
@@ -267,7 +301,7 @@ export default function ThreeScene({
         <PointMaterial
           transparent
           color={hovered ? "#60a5fa" : "#0ea5e9"}
-          size={0.003}
+          size={isLowEnd ? 0.005 : 0.003} // Larger points for better visibility on low-end
           sizeAttenuation={true}
           depthWrite={false}
           ref={pointMaterialRef}
@@ -279,8 +313,8 @@ export default function ThreeScene({
       <lineSegments geometry={lineGeometry}>
         <BeamLineMaterial
           color={hovered ? "#60a5fa" : "#9bdcfa"}
-          opacity={0.05}
-          speed={isVisible ? beamSpeed : 0}
+          opacity={isLowEnd ? 0.08 : 0.05} // Higher opacity for better visibility
+          speed={isVisible ? (isLowEnd ? beamSpeed * 0.5 : beamSpeed) : 0} // Slower animation on low-end
         />
       </lineSegments>
     </group>

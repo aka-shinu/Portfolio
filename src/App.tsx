@@ -26,10 +26,11 @@ export const ThemeContext = createContext({
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [isTestCompleted, setIsTestCompleted] = useState(false);
-  const [count, setCount] = useState<number>(1500);
-  const [maxConnectionsPerPoint, setMaxConnectionsPerPoint] =
-    useState<number>(3);
-  const [beamSpeed, setBeamSpeed] = useState(0.5);
+  const [threeConfig, setThreeConfig] = useState({
+    count: 1500,
+    maxConnectionsPerPoint: 3,
+    beamSpeed: 0.5,
+  });
   const frameTimes = useRef<number[]>([]);
   const landingRef = useRef(null);
   const [isLandingVisible, setIsLandingVisible] = useState(true);
@@ -64,7 +65,7 @@ function App() {
       }
       last = now;
       frame++;
-      if (frame < 10) {
+      if (frame < 50) {
         requestAnimationFrame(testFrame);
       } else {
         // Calculate average frame time
@@ -75,19 +76,25 @@ function App() {
         // Set speed: slower on slower devices
         if (avg >= 50) {
           // High-end device
-          setBeamSpeed(0.5);
-          setMaxConnectionsPerPoint(4);
-          setCount(1500);
+          setThreeConfig({
+            count: 1500,
+            maxConnectionsPerPoint: 4,
+            beamSpeed: 0.5,
+          });
         } else if (avg >= 30) {
           // Medium device
-          setBeamSpeed(0.3);
-          setMaxConnectionsPerPoint(4);
-          setCount(600);
+          setThreeConfig({
+            count: 500,
+            maxConnectionsPerPoint: 2,
+            beamSpeed: 0.3,
+          });
         } else {
           // Low-end device
-          setBeamSpeed(0.3);
-          setMaxConnectionsPerPoint(2);
-          setCount(500);
+          setThreeConfig({
+            count: 200,
+            maxConnectionsPerPoint: 1,
+            beamSpeed: 0.1,
+          });
         }
 
         setIsTestCompleted(true);
@@ -208,9 +215,9 @@ function App() {
                   {isLandingVisible && (
                     <ThreeScene
                       isVisible={true}
-                      maxConnectionsPerPoint={maxConnectionsPerPoint}
-                      count={count}
-                      beamSpeed={beamSpeed}
+                      maxConnectionsPerPoint={threeConfig.maxConnectionsPerPoint}
+                      count={threeConfig.count}
+                      beamSpeed={threeConfig.beamSpeed}
                       onCreated={!isLoaded ? () => {} : () => {}}
                     />
                   )}
