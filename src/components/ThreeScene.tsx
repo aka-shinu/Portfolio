@@ -69,9 +69,11 @@ interface ThreeSceneProps {
   beamSpeed?: number;
   maxConnectionsPerPoint?: number;
   count?: number;
+  onCreated:()=> void,
 }
 
 export default function ThreeScene({
+  onCreated,
   isVisible = true,
   beamSpeed = 0.5,
   maxConnectionsPerPoint = 4,
@@ -196,6 +198,9 @@ export default function ThreeScene({
     }
     // Increment local time for beam animation
   });
+  useEffect(()=>{
+    onCreated()
+  },[])
 
   return (
     <group>

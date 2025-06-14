@@ -1,13 +1,16 @@
 import { Canvas } from "@react-three/fiber";
-import { Suspense, createContext, useState, useEffect, useRef } from "react";
-import ThreeScene from "./components/ThreeScene";
-import About from "./components/About";
-import Skills from "./components/Skills";
-import Projects from "./components/Projects";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
-import { motion } from "framer-motion";
+import { Suspense, createContext, useState, useEffect, useRef, lazy } from "react";
 import BlobLoader from "./components/BlobLoader";
+
+// Lazy load components that are not immediately visible
+const ThreeScene = lazy(() => import("./components/ThreeScene"));
+const About = lazy(() => import("./components/About"));
+const Skills = lazy(() => import("./components/Skills"));
+const Projects = lazy(() => import("./components/Projects"));
+const Contact = lazy(() => import("./components/Contact"));
+const Footer = lazy(() => import("./components/Footer"));
+
+import { motion } from "framer-motion";
 
 export const ThemeContext = createContext({
   isDarkMode: true,
@@ -139,7 +142,7 @@ function App() {
           <div className="absolute inset-0">
             <Canvas
               camera={{ position: [0, 0, 2], fov: 75 }}
-              onCreated={() => setIsLoaded(true)}
+              // onCreated={() => setIsLoaded(true)}
               dpr={[1, 1.5]}
             >
               <Suspense fallback={null}>
@@ -149,6 +152,7 @@ function App() {
                     maxConnectionsPerPoint={maxConnectionsPerPoint}
                     count={count}
                     beamSpeed={beamSpeed}
+                    onCreated={!isLoaded? ()=>setIsLoaded(true): ()=>{}}
                   />
                 )}
               </Suspense>
@@ -319,15 +323,25 @@ function App() {
           </motion.div>
         </section>
 
-        <About />
+        <Suspense fallback={<div className="min-h-screen bg-secondary-900 dark:bg-secondary-900" />}>
+          <About />
+        </Suspense>
 
-        <Skills />
+        <Suspense fallback={<div className="min-h-screen bg-secondary-900 dark:bg-secondary-900" />}>
+          <Skills />
+        </Suspense>
 
-        <Projects />
+        <Suspense fallback={<div className="min-h-screen bg-secondary-900 dark:bg-secondary-900" />}>
+          <Projects />
+        </Suspense>
 
-        <Contact />
+        <Suspense fallback={<div className="min-h-screen bg-secondary-900 dark:bg-secondary-900" />}>
+          <Contact />
+        </Suspense>
 
-        <Footer />
+        <Suspense fallback={<div className="min-h-screen bg-secondary-900 dark:bg-secondary-900" />}>
+          <Footer />
+        </Suspense>
       </div>
     </ThemeContext.Provider>
   ) : (
