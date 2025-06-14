@@ -169,45 +169,30 @@ function App() {
                     <span>I'm Anmol</span>
                   </div>
                 </h1>
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3, duration: 0.8 }}
+                <div
                   className="text-[90%] md:text-3xl text-white/90 font-light"
                 >
                   <span className="inline-block">
-                    <motion.span
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5, duration: 0.5 }}
+                    <span
                       className="inline-block"
                     >
                       Full-Stack Developer
-                    </motion.span>
-                    <motion.span
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.7, duration: 0.5 }}
+                    </span>
+                    <span
                       className="inline-block mx-2"
                     >
                       •
-                    </motion.span>
-                    <motion.span
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.9, duration: 0.5 }}
+                    </span>
+                    <span
                       className="inline-block"
                     >
                       Digital Craftsman
-                    </motion.span>
+                    </span>
                   </span>
-                </motion.div>
+                </div>
               </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.2 }}
+              <div
                 className="flex gap-6 justify-center"
               >
                 <a
@@ -226,7 +211,7 @@ function App() {
                   <div className="absolute inset-0 border-2 border-white/30 rounded-lg group-hover:border-white/50 transition-colors duration-300" />
                   <div className="absolute inset-0 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </a>
-              </motion.div>
+              </div>
             </div>
           </div>
 
