@@ -64,7 +64,7 @@ function App() {
       }
       last = now;
       frame++;
-      if (frame < 50) {
+      if (frame < 10) {
         requestAnimationFrame(testFrame);
       } else {
         // Calculate average frame time
@@ -76,7 +76,7 @@ function App() {
         if (avg >= 50) {
           // High-end device
           setBeamSpeed(0.5);
-          setMaxConnectionsPerPoint(5);
+          setMaxConnectionsPerPoint(4);
           setCount(1500);
         } else if (avg >= 30) {
           // Medium device
@@ -199,12 +199,12 @@ function App() {
 
           >
             {isLandingVisible && (
-            <Suspense fallback={null}>
               <Canvas
                 camera={{ position: [0, 0, 2], fov: 75 }}
                 // onCreated={() => setIsLoaded(true)}
                 dpr={[1, 1.5]}
               >
+            <Suspense fallback={null}>
                   {isLandingVisible && (
                     <ThreeScene
                       isVisible={true}
@@ -214,8 +214,8 @@ function App() {
                       onCreated={!isLoaded ? () => {} : () => {}}
                     />
                   )}
+                  </Suspense>
               </Canvas>
-                </Suspense>
             )}
           </motion.div>)}
           {/* Navigation */}
