@@ -52,28 +52,28 @@ export default defineConfig(({ mode }) => ({
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
       },
-      plugins: [
-        // Inline critical CSS only in production
-        ...(mode === 'production'
-          ? [
-              PluginCritical({
-                criticalUrl: './dist/index.html',
-                criticalBase: './dist/',
-                criticalPages: [
-                  {
-                    uri: '',       // root path
-                    template: 'index', // points to dist/index.html
-                  },
-                ],
-                criticalConfig: {
-                  inline: true,
-                  width: 1300,
-                  height: 900,
-                },
-              }),
-            ]
-          : []),
-      ],
+    //   plugins: [
+    //     // Inline critical CSS only in production
+    //     ...(mode === 'production'
+    //       ? [
+    //           PluginCritical({
+    //             criticalUrl: './dist/index.html',
+    //             criticalBase: './dist/',
+    //             criticalPages: [
+    //               {
+    //                 uri: '',       // root path
+    //                 template: 'index', // points to dist/index.html
+    //               },
+    //             ],
+    //             criticalConfig: {
+    //               inline: true,
+    //               width: 1300,
+    //               height: 900,
+    //             },
+    //           }),
+    //         ]
+    //       : []),
+    //   ],
     },
     // Enable tree shaking and dead code elimination
     target: 'esnext',
