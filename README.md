@@ -214,7 +214,6 @@ This project is open-source and proudly released under the **MIT License**. Feel
 
 -----
 
-\<div align="center"\>
 
 ### ⭐ If this portfolio sparked some inspiration, please give it a star on GitHub\!
 
@@ -225,7 +224,7 @@ This project is open-source and proudly released under the **MIT License**. Feel
 
 *Handcrafted with ❤️ and a passion for creating impactful web experiences.*
 
-\</div\>
+
 
 ```
 ```
