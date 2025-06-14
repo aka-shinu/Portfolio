@@ -42,7 +42,7 @@ function App() {
     if ('requestIdleCallback' in window) {
       requestIdleCallback(() => setTimeout(start, 300));
     } else {
-      setTimeout(start, 600);
+      setTimeout(start, 1000);
     }
   }, []);
   useEffect(() => {
