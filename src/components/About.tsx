@@ -42,7 +42,7 @@ export default function About() {
           >
             <div className="aspect-square rounded-2xl overflow-hidden transform transition-transform duration-500 group-hover:scale-105">
               <img
-                src="public/image.png"
+                src="/image.png"
                 alt="Anmol"
                 className="w-full h-full object-cover"
               />
