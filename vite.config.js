@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import compression from 'vite-plugin-compression';
-import PluginCritical from 'rollup-plugin-critical'; // for critical CSS
+import { visualizer } from "rollup-plugin-visualizer";
 
 export default defineConfig(({ mode }) => ({
   build: {
@@ -83,6 +83,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
   plugins: [
+      visualizer({ open: true }),
     react(),
     compression({ algorithm: 'gzip', ext: '.gz', threshold: 10240 }),
     compression({ algorithm: 'brotliCompress', ext: '.br', threshold: 10240 }),
