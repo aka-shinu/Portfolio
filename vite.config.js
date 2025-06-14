@@ -85,7 +85,6 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     compression({ algorithm: 'gzip', ext: '.gz', threshold: 10240 }),
-    compression({ algorithm: 'brotliCompress', ext: '.br', threshold: 10240 }),
   ],
   // Optimize dependency pre-bundling
   optimizeDeps: {
