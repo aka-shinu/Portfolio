@@ -10,7 +10,29 @@ const Contact = lazy(() => import("./components/Contact"));
 const Footer = lazy(() => import("./components/Footer"));
 
 import { motion } from "framer-motion";
+function useLCPReady(delay = 300) {
+  const [canRender, setCanRender] = useState(false);
 
+  useEffect(() => {
+    const observer = new PerformanceObserver((entryList) => {
+      for (const entry of entryList.getEntries()) {
+        if (entry.name === "largest-contentful-paint") {
+          setTimeout(() => setCanRender(true), delay);
+        }
+      }
+    });
+
+    try {
+      observer.observe({ type: "largest-contentful-paint", buffered: true });
+    } catch (err) {
+      setCanRender(true); // fallback for unsupported browsers
+    }
+
+    return () => observer.disconnect();
+  }, [delay]);
+
+  return canRender;
+}
 export const ThemeContext = createContext({
   isDarkMode: true,
   toggleTheme: () => {},
@@ -25,6 +47,7 @@ function App() {
   const [beamSpeed, setBeamSpeed] = useState(0.5);
   const frameTimes = useRef<number[]>([]);
   const landingRef = useRef(null);
+  const shouldShowCanvas = useLCPReady(300); // Delay mount after LCP + 300ms
   const [isLandingVisible, setIsLandingVisible] = useState(true);
 
   const [isLoaded, setIsLoaded] = useState(false);
@@ -139,13 +162,13 @@ function App() {
         >
           {/* Three.js Canvas */}
           <div className="absolute inset-0">
-            {isLandingVisible && <Canvas
+            {shouldShowCanvas && <Canvas
               camera={{ position: [0, 0, 2], fov: 75 }}
               // onCreated={() => setIsLoaded(true)}
               dpr={[1, 1.5]}
             >
               <Suspense fallback={null}>
-                {(
+                {isLandingVisible && (
                   <ThreeScene
                     isVisible={true}
                     maxConnectionsPerPoint={maxConnectionsPerPoint}
