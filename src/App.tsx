@@ -85,12 +85,6 @@ function App() {
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
-  useEffect(() => {
-    console.log(isTestCompleted, "isTestCompleted");
-    console.log(maxConnectionsPerPoint, "maxConnectionsPerPoint");
-    console.log(count, "count");
-    console.log(beamSpeed, "beamSpeed");
-  }, [isTestCompleted]);
   return isTestCompleted ? (
     <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
       <BlobLoader isLoaded={isLoaded} />
