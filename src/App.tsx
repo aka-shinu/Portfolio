@@ -53,6 +53,7 @@ function App() {
     if (landingRef.current) observer.observe(landingRef.current);
     return () => observer.disconnect();
   }, []);
+  alert("1")
   useEffect(() => {
     let frame = 0;
     let last = performance.now();
