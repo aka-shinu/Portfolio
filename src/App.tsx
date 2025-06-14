@@ -163,7 +163,12 @@ function App() {
           className="relative h-screen w-full overflow-hidden"
         >
           {/* Three.js Canvas */}
-          <div className="absolute inset-0">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: canStartRendering ? 1 : 0 }}
+            transition={{ duration: 1 }}
+            className="absolute inset-0"
+          >
             {isLandingVisible && (
               <Canvas
                 camera={{ position: [0, 0, 2], fov: 75 }}
@@ -178,12 +183,12 @@ function App() {
                       count={count}
                       beamSpeed={beamSpeed}
                       onCreated={!isLoaded ? () => setIsLoaded(true) : () => {}}
-                    />)
-                  }
+                    />
+                  )}
                 </Suspense>
               </Canvas>
             )}
-          </div>
+          </motion.div>
 
           <div className="relative z-10 h-full flex items-center justify-center">
             <div className="text-center space-y-8 px-4 max-w-4xl mx-auto">
