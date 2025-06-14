@@ -33,7 +33,7 @@ function App() {
   useEffect(() => {
     const observer = new window.IntersectionObserver(
       ([entry]) => setIsLandingVisible(entry.isIntersecting),
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: '50px' }
     );
     if (landingRef.current) observer.observe(landingRef.current);
     return () => observer.disconnect();

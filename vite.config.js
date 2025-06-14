@@ -10,6 +10,28 @@ export default defineConfig(({ mode }) => ({
     sourcemap: mode === 'development',
     minify: mode === 'production' ? 'terser' : false,
     rollupOptions: {
+      output: {
+        // Optimize chunk splitting for better caching
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          three: ['three', '@react-three/fiber', '@react-three/drei'],
+          animations: ['framer-motion'],
+        },
+        // Optimize asset naming for better caching
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name.split('.');
+          const ext = info[info.length - 1];
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
+            return `assets/images/[name]-[hash][extname]`;
+          }
+          if (/css/i.test(ext)) {
+            return `assets/css/[name]-[hash][extname]`;
+          }
+          return `assets/[name]-[hash][extname]`;
+        },
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+      },
       plugins: [
         // Inline critical CSS only in production
         ...(mode === 'production'
@@ -34,10 +56,20 @@ export default defineConfig(({ mode }) => ({
           : []),
       ],
     },
+    // Enable tree shaking and dead code elimination
+    target: 'esnext',
+    // Optimize dependencies
+    commonjsOptions: {
+      include: [/node_modules/],
+    },
   },
   plugins: [
     react(),
     compression({ algorithm: 'gzip', ext: '.gz', threshold: 10240 }),
     compression({ algorithm: 'brotliCompress', ext: '.br', threshold: 10240 }),
   ],
+  // Optimize dependency pre-bundling
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'three', '@react-three/fiber'],
+  },
 }));
