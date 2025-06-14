@@ -72,7 +72,7 @@ function App() {
         const avgFrameTime =
           frameTimes.current.reduce((a, b) => a + b, 0) /
           frameTimes.current.length;
-        const avg = 1000 / avgFrameTime; // ✅ This is the actual FPS
+        const avg = 1000 / avgFrameTime;
         // Set speed: slower on slower devices
         if (avg >= 50) {
           // High-end device
@@ -158,7 +158,6 @@ function App() {
         <section
           className="relative h-screen w-full overflow-hidden"
         >
-          {/* Three.js Canvas */}
           <div className="relative z-10 h-full flex items-center justify-center">
             <div className="text-center space-y-8 px-4 max-w-4xl mx-auto">
               <div className="space-y-4">
@@ -225,7 +224,6 @@ function App() {
               </Canvas>
             )}
           </motion.div>)}
-          {/* Navigation */}
           <nav className="absolute top-0 left-0 right-0 z-20 p-6">
             <div className="container-custom flex justify-between items-center">
               <motion.a
@@ -261,8 +259,6 @@ function App() {
               </motion.div>
             </div>
           </nav>
-
-          {/* Social Links */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}

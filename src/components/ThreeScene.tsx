@@ -8,7 +8,6 @@ import { random } from "maath";
 const isLowEndDevice = () => {
   if (typeof window === 'undefined') return false;
   
-  // Check for low-end device indicators
   const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   const hasLowMemory = (navigator as any).deviceMemory && (navigator as any).deviceMemory < 4;
   const hasLowCores = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
@@ -135,7 +134,6 @@ export default function ThreeScene({
     const positionsArray = Array.from(positions);
     const spatialHash = new Map<string, number[]>();
     const maxTotalLines = isLowEnd ? Math.min(adaptiveCount, 200) : adaptiveCount; // Limit total lines on low-end
-
     // Create spatial hash for faster neighbor lookup
     for (let i = 0; i < adaptiveCount; i++) {
       const x = positionsArray[i * 3];
@@ -192,7 +190,6 @@ export default function ThreeScene({
     return lines;
   }, [positions, adaptiveCount, adaptiveConnections, connectionDistance, isLowEnd]);
 
-  // Optimized: Single geometry for all lines
   const lineGeometry = useMemo(() => {
     const geometry = new THREE.BufferGeometry();
     const positionsArray = Array.from(positions);
@@ -220,7 +217,6 @@ export default function ThreeScene({
       const x = (event.clientX / window.innerWidth) * 2 - 1;
       const y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-      // Throttle mouse updates for low-end devices
       if (!isLowEnd || Math.abs(mouseMoveRef.current.x - x) > 0.01 || Math.abs(mouseMoveRef.current.y - y) > 0.01) {
         mouseMoveRef.current = { x, y };
       }
@@ -230,17 +226,14 @@ export default function ThreeScene({
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [isLowEnd]);
 
-  // Optimized useFrame hook with better performance for low-end devices
   const frameCount = useRef(0);
   useFrame((state, delta) => {
     frameCount.current++;
     
-    // Handle fade in
     if (fadeInProgress < 1) {
       setFadeInProgress((p) => Math.min(p + delta * 1.2, 1));
     }
 
-    // Handle rotation and scaling
     if (ref.current) {
       const rotationSpeed = isLowEnd ? 0.5 : 1; // Slower rotation for low-end
       ref.current.rotation.x -= (delta / 30) * rotationSpeed;
@@ -257,7 +250,6 @@ export default function ThreeScene({
       ref.current.scale.setScalar(1 + Math.sin(time * 0.5) * scaleIntensity);
     }
 
-    // Handle material updates
     if (pointMaterialRef.current) {
       pointMaterialRef.current.opacity = fadeInProgress * 0.8;
     }
@@ -267,7 +259,6 @@ export default function ThreeScene({
     onCreated();
   }, [onCreated]);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (ref.current) {
@@ -309,7 +300,6 @@ export default function ThreeScene({
         />
       </Points>
 
-      {/* Single line geometry for all connections */}
       <lineSegments geometry={lineGeometry}>
         <BeamLineMaterial
           color={hovered ? "#60a5fa" : "#9bdcfa"}

@@ -6,7 +6,7 @@ export const GITHUB_CONFIG = {
   maxProjects: import.meta.env.VITE_MAX_PROJECTS,
   apiBaseUrl: 'https://api.github.com',
   useAuth: false,
-  // token: import.meta.env.VITE_GITHUB_TOKEN || '',
+  token: import.meta.env.VITE_GITHUB_TOKEN || '',
 };
 
 export const TECHNOLOGY_KEYWORDS = [

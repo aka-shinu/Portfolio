@@ -158,7 +158,6 @@ const SKILLS: Skill[] = [
   },
 ];
 
-// Helper: Find k nearest neighbors for each node
 function getKNearest(nodes: { x: number; y: number }[], k: number): number[][] {
   return nodes.map((node, i) => {
     const dists = nodes.map((other, j) => ({
@@ -227,7 +226,6 @@ function useFloatingGridPositions(
     setPositions(newPositions);
   }, [count, gridCols, gridRows, width, height, radius]);
 
-  // Animate
   useEffect(() => {
     let running = true;
     function animate() {
@@ -320,7 +318,6 @@ export default function Skills() {
   const containerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   
-  // Intersection Observer to detect when section is visible
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -328,7 +325,7 @@ export default function Skills() {
       },
       {
         threshold: 0.3, // Trigger when 30% of the section is visible
-        rootMargin: '0px 0px -100px 0px' // Start animation slightly before fully in view
+        rootMargin: '0px 0px -100px 0px' 
       }
     );
 
@@ -343,11 +340,9 @@ export default function Skills() {
     };
   }, []);
 
-  // Calculate grid size to fit all nodes in view
   const gridCols = 5;
   const gridRows = Math.ceil(SKILLS.length / gridCols);
   const orbRadius = 44;
-  // Responsive container size: fill viewport height, minus header/footer if needed
   const [dimensions, setDimensions] = useState({ width: 1200, height: 900 });
   useEffect(() => {
     function handleResize() {
