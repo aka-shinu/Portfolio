@@ -139,13 +139,13 @@ function App() {
         >
           {/* Three.js Canvas */}
           <div className="absolute inset-0">
-            <Canvas
+            {isLandingVisible && <Canvas
               camera={{ position: [0, 0, 2], fov: 75 }}
               // onCreated={() => setIsLoaded(true)}
               dpr={[1, 1.5]}
             >
               <Suspense fallback={null}>
-                {isLandingVisible && (
+                {(
                   <ThreeScene
                     isVisible={true}
                     maxConnectionsPerPoint={maxConnectionsPerPoint}
@@ -155,7 +155,7 @@ function App() {
                   />
                 )}
               </Suspense>
-            </Canvas>
+            </Canvas>}
           </div>
 
           <div className="relative z-10 h-full flex items-center justify-center">
