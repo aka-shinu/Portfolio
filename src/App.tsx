@@ -1,5 +1,12 @@
 import { Canvas } from "@react-three/fiber";
-import { Suspense, createContext, useState, useEffect, useRef, lazy } from "react";
+import {
+  Suspense,
+  createContext,
+  useState,
+  useEffect,
+  useRef,
+  lazy,
+} from "react";
 import BlobLoader from "./components/BlobLoader";
 
 const ThreeScene = lazy(() => import("./components/ThreeScene"));
@@ -28,11 +35,29 @@ function App() {
   const [isLandingVisible, setIsLandingVisible] = useState(true);
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const [canStartRendering, setCanStartRendering] = useState(false);
 
+  useEffect(() => {
+    const observer = new PerformanceObserver((entryList) => {
+      for (const entry of entryList.getEntries()) {
+        if (entry.name === "largest-contentful-paint") {
+          setTimeout(() => setCanStartRendering(true), 300); // delay after LCP
+        }
+      }
+    });
+
+    try {
+      observer.observe({ type: "largest-contentful-paint", buffered: true });
+    } catch (err) {
+      setCanStartRendering(true); // fallback
+    }
+
+    return () => observer.disconnect();
+  }, []);
   useEffect(() => {
     const observer = new window.IntersectionObserver(
       ([entry]) => setIsLandingVisible(entry.isIntersecting),
-      { threshold: 0.1, rootMargin: '50px' }
+      { threshold: 0.1, rootMargin: "50px" }
     );
     if (landingRef.current) observer.observe(landingRef.current);
     return () => observer.disconnect();
@@ -139,62 +164,46 @@ function App() {
         >
           {/* Three.js Canvas */}
           <div className="absolute inset-0">
-            {isLandingVisible && <Canvas
-              camera={{ position: [0, 0, 2], fov: 75 }}
-              // onCreated={() => setIsLoaded(true)}
-              dpr={[1, 1.5]}
-            >
-              <Suspense fallback={null}>
-                {(
-                  <ThreeScene
-                    isVisible={true}
-                    maxConnectionsPerPoint={maxConnectionsPerPoint}
-                    count={count}
-                    beamSpeed={beamSpeed}
-                    onCreated={!isLoaded? ()=>setIsLoaded(true): ()=>{}}
-                  />
-                )}
-              </Suspense>
-            </Canvas>}
+            {isLandingVisible && (
+              <Canvas
+                camera={{ position: [0, 0, 2], fov: 75 }}
+                // onCreated={() => setIsLoaded(true)}
+                dpr={[1, 1.5]}
+              >
+                <Suspense fallback={null}>
+                  {canStartRendering && (
+                    <ThreeScene
+                      isVisible={true}
+                      maxConnectionsPerPoint={maxConnectionsPerPoint}
+                      count={count}
+                      beamSpeed={beamSpeed}
+                      onCreated={!isLoaded ? () => setIsLoaded(true) : () => {}}
+                    />)
+                  }
+                </Suspense>
+              </Canvas>
+            )}
           </div>
 
           <div className="relative z-10 h-full flex items-center justify-center">
             <div className="text-center space-y-8 px-4 max-w-4xl mx-auto">
-              <div
-                className="space-y-4"
-              >
+              <div className="space-y-4">
                 <h1 className="text-5xl md:text-8xl font-extrabold text-white tracking-tight">
                   <div className="bg-clip-text space-x-5 md:flex-row flex-col flex text-transparent bg-gradient-to-r from-blue-400 to-cyan-300">
                     <span>Hello,</span>
                     <span>I'm Anmol</span>
                   </div>
                 </h1>
-                <div
-                  className="text-[90%] md:text-3xl text-white/90 font-light"
-                >
+                <div className="text-[90%] md:text-3xl text-white/90 font-light">
                   <span className="inline-block">
-                    <span
-                      className="inline-block"
-                    >
-                      Full-Stack Developer
-                    </span>
-                    <span
-                      className="inline-block mx-2"
-                    >
-                      •
-                    </span>
-                    <span
-                      className="inline-block"
-                    >
-                      Digital Craftsman
-                    </span>
+                    <span className="inline-block">Full-Stack Developer</span>
+                    <span className="inline-block mx-2">•</span>
+                    <span className="inline-block">Digital Craftsman</span>
                   </span>
                 </div>
               </div>
 
-              <div
-                className="flex gap-6 justify-center"
-              >
+              <div className="flex gap-6 justify-center">
                 <a
                   href="#projects"
                   className="group relative px-4 py-3 md:px-8 md:py-3 text-[90%] md:text-lg font-medium text-white transition-all duration-300"
@@ -304,23 +313,43 @@ function App() {
           </motion.div>
         </section>
 
-        <Suspense fallback={<div className="min-h-screen bg-secondary-900 dark:bg-secondary-900" />}>
+        <Suspense
+          fallback={
+            <div className="min-h-screen bg-secondary-900 dark:bg-secondary-900" />
+          }
+        >
           <About />
         </Suspense>
 
-        <Suspense fallback={<div className="min-h-screen bg-secondary-900 dark:bg-secondary-900" />}>
+        <Suspense
+          fallback={
+            <div className="min-h-screen bg-secondary-900 dark:bg-secondary-900" />
+          }
+        >
           <Skills />
         </Suspense>
 
-        <Suspense fallback={<div className="min-h-screen bg-secondary-900 dark:bg-secondary-900" />}>
+        <Suspense
+          fallback={
+            <div className="min-h-screen bg-secondary-900 dark:bg-secondary-900" />
+          }
+        >
           <Projects />
         </Suspense>
 
-        <Suspense fallback={<div className="min-h-screen bg-secondary-900 dark:bg-secondary-900" />}>
+        <Suspense
+          fallback={
+            <div className="min-h-screen bg-secondary-900 dark:bg-secondary-900" />
+          }
+        >
           <Contact />
         </Suspense>
 
-        <Suspense fallback={<div className="min-h-screen bg-secondary-900 dark:bg-secondary-900" />}>
+        <Suspense
+          fallback={
+            <div className="min-h-screen bg-secondary-900 dark:bg-secondary-900" />
+          }
+        >
           <Footer />
         </Suspense>
       </div>
