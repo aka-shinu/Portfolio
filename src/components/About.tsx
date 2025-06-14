@@ -40,7 +40,7 @@ export default function About() {
             variants={itemVariants}
             className="relative group"
           >
-            <div className="aspect-square rounded-2xl overflow-hidden transform transition-transform duration-500 group-hover:scale-105">
+            <div className="aspect-square rounded-2xl overflow-hidden transform transition-transform duration-500 group-hover:scale-105 relative z-[2]">
               <img
                 src="/image.webp"
                 alt="Anmol"
@@ -48,9 +48,9 @@ export default function About() {
                 height={"100%"}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 z-10 bg-gradient-to-t from-primary-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
-            <div className="absolute inset-0 rounded-2xl border-2 border-primary-500 transform translate-x-4 translate-y-4 -z-10 group-hover:translate-x-6 group-hover:translate-y-6 transition-transform duration-500" />
+            <div className="absolute inset-0 rounded-2xl z-[1]  border-2 border-primary-500 transform translate-x-4 translate-y-4 group-hover:translate-x-6 group-hover:translate-y-6 transition-transform duration-500" />
           </motion.div>
 
           <motion.div variants={itemVariants} className="space-y-6">
