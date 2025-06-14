@@ -14,10 +14,16 @@ const BeamLineMaterial = ({
 }) => {
   const materialRef = useReactRef<THREE.ShaderMaterial | null>(null);
   const localTime = useRef(0);
+  const [fade, setFade] = useState(0);
 
   useFrame((_, delta) => {
     if (materialRef.current) {
       localTime.current += delta * speed;
+      if (fade < 1) {
+        setFade((f) => Math.min(f + delta * 1.5, 1));
+      }
+
+      materialRef.current.uniforms.uOpacity.value = fade * opacity;
 
       (materialRef.current as THREE.ShaderMaterial).uniforms.uTime.value =
         localTime.current;
@@ -69,7 +75,7 @@ interface ThreeSceneProps {
   beamSpeed?: number;
   maxConnectionsPerPoint?: number;
   count?: number;
-  onCreated:()=> void,
+  onCreated: () => void;
 }
 
 export default function ThreeScene({
@@ -80,11 +86,14 @@ export default function ThreeScene({
   count = 1500,
 }: ThreeSceneProps) {
   const ref = useRef<THREE.Points>(null);
+  const pointMaterialRef = useRef<THREE.PointsMaterial>(null);
   const { mouse } = useThree();
   const [hovered, setHovered] = useState(false);
 
   const connectionDistance = 0.3;
   const mouseInfluence = 0.2;
+  const [fadeInProgress, setFadeInProgress] = useState(0);
+  const [fade, setFade] = useState(0);
 
   // Generate initial positions with more organic distribution
   const positions = useMemo(() => {
@@ -180,9 +189,18 @@ export default function ThreeScene({
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
+  useFrame((_, delta) => {
+    if (fadeInProgress < 1) {
+      setFadeInProgress((p) => Math.min(p + delta * 1.2, 1));
+    }
 
+    if (pointMaterialRef.current) {
+      pointMaterialRef.current.opacity = fadeInProgress * 0.9;
+    }
+
+    // optionally loop through lines and update material opacity too
+  });
   useFrame((state, delta) => {
-    if (!isVisible) return;
     if (ref.current) {
       ref.current.rotation.x -= delta / 30;
       ref.current.rotation.y -= delta / 40;
@@ -195,12 +213,22 @@ export default function ThreeScene({
 
       const time = state.clock.getElapsedTime();
       ref.current.scale.setScalar(1 + Math.sin(time * 0.5) * 0.02);
+      
     }
     // Increment local time for beam animation
   });
-  useEffect(()=>{
-    onCreated()
-  },[])
+  useFrame((_, delta) => {
+    if (fade < 1) {
+      setFade((f) => Math.min(f + delta * 1.5, 1));
+    }
+  
+    if (pointMaterialRef.current) {
+      pointMaterialRef.current.opacity = fade * 0.8; // animate up to 80% opacity
+    }
+  });
+  useEffect(() => {
+    onCreated();
+  }, []);
 
   return (
     <group>
@@ -223,6 +251,7 @@ export default function ThreeScene({
           size={0.003}
           sizeAttenuation={true}
           depthWrite={false}
+          ref={pointMaterialRef}
           blending={THREE.AdditiveBlending}
         />
       </Points>

@@ -36,23 +36,14 @@ function App() {
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [canStartRendering, setCanStartRendering] = useState(false);
-
   useEffect(() => {
-    const observer = new PerformanceObserver((entryList) => {
-      for (const entry of entryList.getEntries()) {
-        if (entry.name === "largest-contentful-paint") {
-          setTimeout(() => setCanStartRendering(true), 300); // delay after LCP
-        }
-      }
-    });
-
-    try {
-      observer.observe({ type: "largest-contentful-paint", buffered: true });
-    } catch (err) {
-      setCanStartRendering(true); // fallback
+    const start = () => setCanStartRendering(true);
+  
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => setTimeout(start, 300));
+    } else {
+      setTimeout(start, 600);
     }
-
-    return () => observer.disconnect();
   }, []);
   useEffect(() => {
     const observer = new window.IntersectionObserver(
@@ -108,7 +99,7 @@ function App() {
     // Apply theme class to body
     document.body.classList.toggle("dark", isDarkMode);
   }, [isDarkMode]);
-
+  useEffect(()=>{console.log(canStartRendering)}, [canStartRendering])
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
@@ -166,23 +157,23 @@ function App() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: canStartRendering ? 1 : 0 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 2}}
             className="absolute inset-0"
           >
             {isLandingVisible && (
               <Canvas
                 camera={{ position: [0, 0, 2], fov: 75 }}
-                // onCreated={() => setIsLoaded(true)}
+                onCreated={() => setIsLoaded(true)}
                 dpr={[1, 1.5]}
               >
                 <Suspense fallback={null}>
-                  {canStartRendering && (
+                  {canStartRendering && isLandingVisible && (
                     <ThreeScene
                       isVisible={true}
                       maxConnectionsPerPoint={maxConnectionsPerPoint}
                       count={count}
                       beamSpeed={beamSpeed}
-                      onCreated={!isLoaded ? () => setIsLoaded(true) : () => {}}
+                      onCreated={!isLoaded ? () => {} : () => {}}
                     />
                   )}
                 </Suspense>
