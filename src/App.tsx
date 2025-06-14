@@ -1,11 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import {
-  Suspense,
-  createContext,
-  useState,
-  useEffect,
-  useRef,
-} from "react";
+import { Suspense, createContext, useState, useEffect, useRef } from "react";
 import ThreeScene from "./components/ThreeScene";
 import About from "./components/About";
 import Skills from "./components/Skills";
@@ -15,7 +9,6 @@ import Footer from "./components/Footer";
 import { motion } from "framer-motion";
 import BlobLoader from "./components/BlobLoader";
 
-// Theme context
 export const ThemeContext = createContext({
   isDarkMode: true,
   toggleTheme: () => {},
@@ -29,7 +22,6 @@ function App() {
     useState<number>(3);
   const [beamSpeed, setBeamSpeed] = useState(0.5);
   const frameTimes = useRef<number[]>([]);
-  // Landing section visibility state
   const landingRef = useRef(null);
   const [isLandingVisible, setIsLandingVisible] = useState(true);
 
@@ -58,7 +50,9 @@ function App() {
         requestAnimationFrame(testFrame);
       } else {
         // Calculate average frame time
-        const avgFrameTime = frameTimes.current.reduce((a, b) => a + b, 0) / frameTimes.current.length;
+        const avgFrameTime =
+          frameTimes.current.reduce((a, b) => a + b, 0) /
+          frameTimes.current.length;
         const avg = 1000 / avgFrameTime; // ✅ This is the actual FPS
         // Set speed: slower on slower devices
         if (avg >= 50) {
@@ -77,7 +71,7 @@ function App() {
           setMaxConnectionsPerPoint(2);
           setCount(500);
         }
-        
+
         setIsTestCompleted(true);
       }
     }
@@ -107,7 +101,6 @@ function App() {
           isDarkMode ? "dark bg-secondary-900" : "bg-white"
         }`}
       >
-        {/* Theme Toggle Button */}
         <button
           onClick={toggleTheme}
           className="fixed top-6 right-6 z-30 p-2 rounded-full bg-primary-500 text-white hover:bg-primary-600 transition-colors"
@@ -144,7 +137,6 @@ function App() {
           )}
         </button>
 
-        {/* Landing Section */}
         <section
           ref={landingRef}
           className="relative h-screen w-full overflow-hidden"
@@ -169,7 +161,6 @@ function App() {
             </Canvas>
           </div>
 
-          {/* Content Overlay */}
           <div className="relative z-10 h-full flex items-center justify-center">
             <div className="text-center space-y-8 px-4 max-w-4xl mx-auto">
               <motion.div
@@ -291,7 +282,7 @@ function App() {
           >
             {[
               {
-                href: "https://github.com/yourusername",
+                href: "https://github.com/aka-shinu",
                 icon: (
                   <svg
                     className="w-6 h-6"
@@ -303,7 +294,7 @@ function App() {
                 ),
               },
               {
-                href: "https://linkedin.com/in/yourusername",
+                href: "https://www.linkedin.com/in/aka-shinu/",
                 icon: (
                   <svg
                     className="w-6 h-6"
@@ -334,19 +325,14 @@ function App() {
           </motion.div>
         </section>
 
-        {/* About Section */}
         <About />
 
-        {/* Skills Section */}
         <Skills />
 
-        {/* Projects Section */}
         <Projects />
 
-        {/* Contact Section */}
         <Contact />
 
-        {/* Footer */}
         <Footer />
       </div>
     </ThemeContext.Provider>

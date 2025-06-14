@@ -36,14 +36,13 @@ export default function About() {
           viewport={{ once: true }}
           className="grid md:grid-cols-2 gap-12 items-center"
         >
-          {/* Profile Image */}
           <motion.div
             variants={itemVariants}
             className="relative group"
           >
             <div className="aspect-square rounded-2xl overflow-hidden transform transition-transform duration-500 group-hover:scale-105">
               <img
-                src="https://placehold.co/600x600"
+                src="public/image.png"
                 alt="Anmol"
                 className="w-full h-full object-cover"
               />
@@ -52,7 +51,6 @@ export default function About() {
             <div className="absolute inset-0 rounded-2xl border-2 border-primary-500 transform translate-x-4 translate-y-4 -z-10 group-hover:translate-x-6 group-hover:translate-y-6 transition-transform duration-500" />
           </motion.div>
 
-          {/* Content */}
           <motion.div variants={itemVariants} className="space-y-6">
             <h2 className={`text-3xl md:text-4xl font-bold ${isDarkMode ? 'text-white' : 'text-secondary-900'}`}>
               About Me
@@ -80,7 +78,6 @@ export default function About() {
               </p>
             </div>
 
-            {/* Key Values */}
             <div className="grid grid-cols-2 gap-4 pt-6">
               {[
                 { title: 'Clean Code', icon: '💻' },

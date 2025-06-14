@@ -2,7 +2,6 @@ export default function Footer() {
   return (
     <footer className="w-full bg-black/30 py-8 !pt-20 px-4 lg:px-8">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 gap-y-8">
-        {/* Brand Info */}
         <div>
           <h2 className="text-white font-semibold text-xl font-heading mb-2 tracking-tight">Anmol</h2>
           <p className="text-gray-300 font-sans text-base mb-4 leading-snug">
@@ -10,7 +9,7 @@ export default function Footer() {
           </p>
           <div className="flex gap-3 items-center mt-1">
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/aka-shinu"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-blue-300 transition-colors duration-200 p-1.5 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center justify-center hover:drop-shadow-[0_2px_8px_rgba(59,130,246,0.15)]"
@@ -19,7 +18,7 @@ export default function Footer() {
               <i className="devicon-github-original text-lg align-middle" aria-hidden="true"></i>
             </a>
             <a
-              href="https://linkedin.com/in/yourusername"
+              href="https://www.linkedin.com/in/aka-shinu/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-blue-300 transition-colors duration-200 p-1.5 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center justify-center hover:drop-shadow-[0_2px_8px_rgba(59,130,246,0.15)]"
@@ -28,7 +27,7 @@ export default function Footer() {
               <i className="devicon-linkedin-plain text-lg align-middle" aria-hidden="true"></i>
             </a>
             <a
-              href="mailto:your.email@example.com"
+              href="mailto:aka-shinu@lethrach.me"
               className="text-white hover:text-blue-300 transition-colors duration-200 p-1.5 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center justify-center hover:drop-shadow-[0_2px_8px_rgba(59,130,246,0.15)]"
               aria-label="Email"
             >
@@ -39,7 +38,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Navigation */}
         <div>
           <h3 className="text-white font-semibold text-lg font-heading mb-3 tracking-tight">Navigation</h3>
           <ul className="space-y-2">
@@ -61,12 +59,11 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Contact */}
         <div>
           <h3 className="text-white font-semibold text-lg font-heading mb-3 tracking-tight">Contact</h3>
           <ul className="space-y-1 mb-4">
             <li>
-              <span className="text-gray-300 font-sans text-base">your.email@example.com</span>
+              <span className="text-gray-300 font-sans text-base">aka-shinu@lethrach.me</span>
             </li>
             <li>
               <span className="text-gray-300 font-sans text-base">Available for new opportunities</span>
@@ -75,7 +72,7 @@ export default function Footer() {
           <h4 className="text-white font-semibold text-base font-heading mb-2">Connect</h4>
           <div className="flex gap-3 items-center">
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/aka-shinu"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-blue-300 transition-colors duration-200 p-1.5 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center justify-center hover:drop-shadow-[0_2px_8px_rgba(59,130,246,0.15)]"
@@ -84,7 +81,7 @@ export default function Footer() {
               <i className="devicon-github-original text-base align-middle" aria-hidden="true"></i>
             </a>
             <a
-              href="https://linkedin.com/in/yourusername"
+              href="https://www.linkedin.com/in/aka-shinu/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-blue-300 transition-colors duration-200 p-1.5 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center justify-center hover:drop-shadow-[0_2px_8px_rgba(59,130,246,0.15)]"
@@ -93,7 +90,7 @@ export default function Footer() {
               <i className="devicon-linkedin-plain text-base align-middle" aria-hidden="true"></i>
             </a>
             <a
-              href="mailto:your.email@example.com"
+              href="mailto:aka-shinu@lethrach.me"
               className="text-white hover:text-blue-300 transition-colors duration-200 p-1.5 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center justify-center hover:drop-shadow-[0_2px_8px_rgba(59,130,246,0.15)]"
               aria-label="Email"
             >

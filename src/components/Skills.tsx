@@ -423,7 +423,6 @@ export default function Skills() {
         }
       }
     >
-      {/* Ambient background dots/wisps */}
       <div className={`w-full h-full space-y-9 text-center text-white text-5xl md:text-7xl capitalize flex flex-col transition-all duration-1000 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
       }`}>
@@ -449,7 +448,6 @@ export default function Skills() {
           isVisible ? 'opacity-100' : 'opacity-0'
         }`} />
       </div>
-      {/* Category Tabs */}
       <div className={`w-full mt-9 mb-9 flex justify-center gap-2 md:gap-6 pt-5 pb-4 md:pl-0 md:pr-0 pl-7 pr-7 z-20 transition-all duration-1000 delay-300 ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
       }`}>
@@ -490,7 +488,6 @@ export default function Skills() {
           View All
         </button>
       </div>
-      {/* Dynamic Orb Grid + Lines */}
       <div
         ref={containerRef}
         className={`relative w-full flex-1 m-20 transition-all duration-1000 delay-500 ${
@@ -498,17 +495,14 @@ export default function Skills() {
         }`}
         style={{ minHeight: 700, height: "calc(100vh - 8rem)" }}
       >
-        {/* Canvas for lines */}
         <canvas
           ref={canvasRef}
           width={dimensions.width}
           height={dimensions.height}
           className="absolute inset-0 w-full h-full pointer-events-none z-0"
         />
-        {/* Floating skill orbs */}
         {positions.map((pos, i) => (
           <React.Fragment key={SKILLS[i].name}>
-            {/* Category heading if first in category */}
             {/* {firstOfCategory[SKILLS[i].category] === i && (
               <div
                 className="absolute text-lg font-semibold text-center tracking-wide z-10"
@@ -540,7 +534,6 @@ export default function Skills() {
               onHover={() => setHoveredSkill(SKILLS[i])}
               onLeave={() => setHoveredSkill(null)}
             />
-            {/* Tooltip */}
             {hoveredSkill && hoveredSkill.name === SKILLS[i].name && (
               <div
                 className="absolute left-1/2 -top-8 -translate-x-1/2 z-30 pointer-events-none animate-fadein"
@@ -566,18 +559,7 @@ export default function Skills() {
           </React.Fragment>
         ))}
       </div>
-      {/* Animations */}
-      <style>{`
-        @keyframes breathing {
-          0%, 100% { transform: scale(1); box-shadow: 0 0 16px 2px rgba(30,41,59,0.22); }
-          50% { transform: scale(1.045); box-shadow: 0 0 32px 8px rgba(96,165,250,0.22); }
-        }
-        .animate-breathing { animation: breathing 2.8s ease-in-out infinite; }
-        @keyframes pulse-slow { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
-        .animate-pulse-slow { animation: pulse-slow 5s ease-in-out infinite; }
-        @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
-        .animate-fadein { animation: fadein 0.18s ease; }
-      `}</style>
+     
     </section>
   );
 }
