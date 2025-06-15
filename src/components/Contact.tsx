@@ -373,12 +373,12 @@ export default function Contact() {
                             Phone
                           </h4>
                           <a 
-                            href="tel:+1234567890" 
+                            href="tel:+918882043374" 
                             className={`hover:text-primary-500 transition-colors ${
                               isDarkMode ? 'text-secondary-300' : 'text-secondary-600'
                             }`}
                           >
-                          +1 (234) 567-890
+                          +91 88820 43374
                         </a>
                         </div>
                       </div>
