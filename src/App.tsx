@@ -167,12 +167,10 @@ function App() {
                     <span>I'm Anmol</span>
                   </div>
                 </h1>
-                <div className="text-[90%] md:text-3xl text-white/90 font-light">
+                <div className="text-[85%] md:text-2xl text-white/90 font-light">
                   <span className="inline-block">
-                    <span className="inline-block">Full-Stack Developer</span>
-                    <span className="inline-block mx-2">•</span>
-                    <span className="inline-block">Digital Craftsman</span>
-                  </span>
+                    <span className="inline-block">Helping solo founders & startups build MVPs fast.</span>
+                 </span>
                 </div>
               </div>
 

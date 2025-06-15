@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
-import { useContext } from 'react';
-import { ThemeContext } from '../App';
+import { motion } from "framer-motion";
+import { useContext } from "react";
+import { ThemeContext } from "../App";
 
 export default function About() {
   const { isDarkMode } = useContext(ThemeContext);
@@ -27,7 +27,10 @@ export default function About() {
   };
 
   return (
-    <section id="about" className={`section ${isDarkMode ? 'bg-secondary-900' : 'bg-white'}`}>
+    <section
+      id="about"
+      className={`section ${isDarkMode ? "bg-secondary-900" : "bg-white"}`}
+    >
       <div className="container-custom">
         <motion.div
           variants={containerVariants}
@@ -36,10 +39,7 @@ export default function About() {
           viewport={{ once: true }}
           className="grid md:grid-cols-2 gap-12 items-center"
         >
-          <motion.div
-            variants={itemVariants}
-            className="relative group"
-          >
+          <motion.div variants={itemVariants} className="relative group">
             <div className="aspect-square rounded-2xl overflow-hidden transform transition-transform duration-500 group-hover:scale-105 relative z-[2]">
               <img
                 src="/image.webp"
@@ -54,48 +54,69 @@ export default function About() {
           </motion.div>
 
           <motion.div variants={itemVariants} className="space-y-6">
-            <h2 className={`text-3xl md:text-4xl font-bold ${isDarkMode ? 'text-white' : 'text-secondary-900'}`}>
+            <h2
+              className={`text-3xl md:text-4xl font-bold ${
+                isDarkMode ? "text-white" : "text-secondary-900"
+              }`}
+            >
               About Me
             </h2>
-            <p className={`text-[90%] md:text-lg leading-relaxed ${isDarkMode ? 'text-secondary-300' : 'text-secondary-600'}`}>
-              I'm a passionate full-stack developer with a keen eye for creating elegant solutions
-              to complex problems. With expertise in modern web technologies and a strong foundation
-              in software engineering principles, I strive to build applications that are not only
-              functional but also delightful to use.
+            <p
+              className={`text-[90%] md:text-lg leading-relaxed ${
+                isDarkMode ? "text-secondary-300" : "text-secondary-600"
+              }`}
+            >
+              I'm a full-stack developer who helps solo founders and early-stage
+              startups bring their product ideas to life — fast, clean, and with
+              care. I specialize in building scalable MVPs and modern web apps
+              using tools like Next.js, Tailwind, Supabase, and WebSockets. From
+              sleek user interfaces to reliable backend systems, I focus on
+              writing clean, maintainable code that delivers real-world value.
             </p>
-            <p className={`text-lg leading-relaxed ${isDarkMode ? 'text-secondary-300' : 'text-secondary-600'}`}>
-              My journey in software development has equipped me with a diverse skill set, from
-              crafting responsive user interfaces to architecting scalable backend systems. I
-              believe in writing clean, maintainable code and staying current with industry
-              best practices.
+            <p
+              className={`text-lg leading-relaxed ${
+                isDarkMode ? "text-secondary-300" : "text-secondary-600"
+              }`}
+            >
+              Whether it’s an idea on a napkin or an early product that needs
+              polish, I love turning ideas into launch-ready applications that
+              feel smooth and look professional.
             </p>
             <div className="pt-4">
               <h3 className={`text-2xl font-semibold text-primary-500 mb-4`}>
                 Mission Statement
               </h3>
-              <p className={`text-lg leading-relaxed ${isDarkMode ? 'text-secondary-300' : 'text-secondary-600'}`}>
-                To leverage technology as a force for positive change, creating intuitive and
-                impactful solutions that enhance people's lives while maintaining the highest
-                standards of code quality and user experience.
+              <p
+                className={`text-lg leading-relaxed ${
+                  isDarkMode ? "text-secondary-300" : "text-secondary-600"
+                }`}
+              >
+                My mission is to use technology to build intuitive, impactful
+                solutions that solve real problems — with a strong focus on
+                clean code, performance, and exceptional user experience.
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-4 pt-6">
               {[
-                { title: 'Clean Code', icon: '💻' },
-                { title: 'User-Centric', icon: '🎯' },
-                { title: 'Innovation', icon: '💡' },
-                { title: 'Learning', icon: '📚' },
+                { title: "Clean Code", icon: "💻" },
+                { title: "User-Centric", icon: "🎯" },
+                { title: "Innovation", icon: "💡" },
+                { title: "Learning", icon: "📚" },
               ].map((value) => (
                 <motion.div
                   key={value.title}
                   variants={itemVariants}
                   className={`p-4 rounded-lg ${
-                    isDarkMode ? 'bg-secondary-800' : 'bg-secondary-50'
+                    isDarkMode ? "bg-secondary-800" : "bg-secondary-50"
                   }`}
                 >
                   <div className="text-2xl mb-2">{value.icon}</div>
-                  <h4 className={`font-semibold ${isDarkMode ? 'text-white' : 'text-secondary-900'}`}>
+                  <h4
+                    className={`font-semibold ${
+                      isDarkMode ? "text-white" : "text-secondary-900"
+                    }`}
+                  >
                     {value.title}
                   </h4>
                 </motion.div>
@@ -106,4 +127,4 @@ export default function About() {
       </div>
     </section>
   );
-} 
+}
