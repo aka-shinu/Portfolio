@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import compression from 'vite-plugin-compression';
+import Sitemap from 'vite-plugin-sitemap'
 
 export default defineConfig(({ mode }) => ({
   build: {
@@ -85,6 +86,17 @@ export default defineConfig(({ mode }) => ({
     react(),
     compression({ algorithm: 'gzip', ext: '.gz', threshold: 10240 }),
     compression({ algorithm: 'brotliCompress', ext: '.br', threshold: 10240 }),
+    Sitemap({
+      hostname: 'https://lethrach.me', 
+      routes: [
+        {
+          url: '/',
+          lastmod: new Date().toISOString(),
+          priority: 1.0,
+          changefreq: 'monthly',
+        },
+      ],
+    }),
   ],
   // Optimize dependency pre-bundling
   optimizeDeps: {
