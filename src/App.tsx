@@ -39,8 +39,8 @@ function App() {
   const [canStartRendering, setCanStartRendering] = useState(false);
   useEffect(() => {
     const start = () => setCanStartRendering(true);
-  
-    if ('requestIdleCallback' in window) {
+
+    if ("requestIdleCallback" in window) {
       requestIdleCallback(() => setTimeout(start, 500));
     } else {
       setTimeout(start, 1000);
@@ -106,7 +106,9 @@ function App() {
     // Apply theme class to body
     document.body.classList.toggle("dark", isDarkMode);
   }, [isDarkMode]);
-  useEffect(()=>{console.log(canStartRendering)}, [canStartRendering])
+  useEffect(() => {
+    console.log(canStartRendering);
+  }, [canStartRendering]);
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
@@ -155,9 +157,7 @@ function App() {
           )}
         </button>
 
-        <section
-          className="relative h-screen w-full overflow-hidden"
-        >
+        <section className="relative h-screen w-full overflow-hidden">
           <div className="relative z-10 h-full flex items-center justify-center">
             <div className="text-center space-y-8 px-4 max-w-4xl mx-auto">
               <div className="space-y-4">
@@ -169,8 +169,10 @@ function App() {
                 </h1>
                 <div className="text-[85%] md:text-2xl text-white/90 font-light">
                   <span className="inline-block">
-                    <span className="inline-block">Helping solo founders & startups build MVPs fast.</span>
-                 </span>
+                    <span className="inline-block">
+                      Helping solo founders & startups build MVPs fast.
+                    </span>
+                  </span>
                 </div>
               </div>
 
@@ -194,34 +196,37 @@ function App() {
               </div>
             </div>
           </div>
-          {canStartRendering && (<motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: canStartRendering ? 1 : 0 }}
-            transition={{ duration: 2}}
-            className="absolute inset-0"
-            ref={landingRef}
-
-          >
-            {isLandingVisible && (
-              <Canvas
-                camera={{ position: [0, 0, 2], fov: 75 }}
-                // onCreated={() => setIsLoaded(true)}
-                dpr={[1, 1.5]}
-              >
-            <Suspense fallback={null}>
-                  {isLandingVisible && (
-                    <ThreeScene
-                      isVisible={true}
-                      maxConnectionsPerPoint={threeConfig.maxConnectionsPerPoint}
-                      count={threeConfig.count}
-                      beamSpeed={threeConfig.beamSpeed}
-                      onCreated={!isLoaded ? () => {} : () => {}}
-                    />
-                  )}
+          {canStartRendering && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: canStartRendering ? 1 : 0 }}
+              transition={{ duration: 2 }}
+              className="absolute inset-0"
+              ref={landingRef}
+            >
+              {isLandingVisible && (
+                <Canvas
+                  camera={{ position: [0, 0, 2], fov: 75 }}
+                  // onCreated={() => setIsLoaded(true)}
+                  dpr={[1, 1.5]}
+                >
+                  <Suspense fallback={null}>
+                    {isLandingVisible && (
+                      <ThreeScene
+                        isVisible={true}
+                        maxConnectionsPerPoint={
+                          threeConfig.maxConnectionsPerPoint
+                        }
+                        count={threeConfig.count}
+                        beamSpeed={threeConfig.beamSpeed}
+                        onCreated={!isLoaded ? () => {} : () => {}}
+                      />
+                    )}
                   </Suspense>
-              </Canvas>
-            )}
-          </motion.div>)}
+                </Canvas>
+              )}
+            </motion.div>
+          )}
           <nav className="absolute top-0 left-0 right-0 z-20 p-6">
             <div className="container-custom flex justify-between items-center">
               <motion.a
@@ -264,6 +269,19 @@ function App() {
             className="absolute bottom-8 left-8 z-20 hidden md:flex flex-col gap-4"
           >
             {[
+              {
+                href: "https://leetcode.com/u/letharch/",
+                icon: (
+                  <svg
+                    fill="currentColor"
+                    className="w-6 h-6"
+                    viewBox="0 0 32 32"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M21.469 23.907l-3.595 3.473c-0.624 0.625-1.484 0.885-2.432 0.885s-1.807-0.26-2.432-0.885l-5.776-5.812c-0.62-0.625-0.937-1.537-0.937-2.485 0-0.952 0.317-1.812 0.937-2.432l5.76-5.844c0.62-0.619 1.5-0.859 2.448-0.859s1.808 0.26 2.432 0.885l3.595 3.473c0.687 0.688 1.823 0.663 2.536-0.052 0.708-0.713 0.735-1.848 0.047-2.536l-3.473-3.511c-0.901-0.891-2.032-1.505-3.261-1.787l3.287-3.333c0.688-0.687 0.667-1.823-0.047-2.536s-1.849-0.735-2.536-0.052l-13.469 13.469c-1.307 1.312-1.989 3.113-1.989 5.113 0 1.996 0.683 3.86 1.989 5.168l5.797 5.812c1.307 1.307 3.115 1.937 5.115 1.937 1.995 0 3.801-0.683 5.109-1.989l3.479-3.521c0.688-0.683 0.661-1.817-0.052-2.531s-1.849-0.74-2.531-0.052zM27.749 17.349h-13.531c-0.932 0-1.692 0.801-1.692 1.791 0 0.991 0.76 1.797 1.692 1.797h13.531c0.933 0 1.693-0.807 1.693-1.797 0-0.989-0.76-1.791-1.693-1.791z" />
+                  </svg>
+                ),
+              },
               {
                 href: "https://github.com/aka-shinu",
                 icon: (
